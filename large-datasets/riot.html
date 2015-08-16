@@ -11,7 +11,7 @@
 
   <demo></demo>
 
-  <script src="https://cdn.jsdelivr.net/g/riot@2.2.2(riot.min.js+compiler.min.js)"></script>
+  <script src="https://cdn.jsdelivr.net/g/riot@2.2.4(riot.min.js+compiler.min.js)"></script>
   <script src="shared.js"></script>
   <script type="riot/tag">
 
@@ -36,7 +36,9 @@
     filterChange(filter) {
       this.filter = filter
       this.visibleCount = getVisibileCount(filter, this.grid)
+      var d = new Date();
       this.update()
+      console.log("filter:" + (new Date() - d));
     }
 
     unmount() {
@@ -50,7 +52,9 @@
       this.grid = generateGrid(1000, 10)
       this.dataPoints = this.grid.length * this.grid[0].items.length
       this.filter = ''
+      var d = new Date();
       this.update()
+      console.log("remount:" + (new Date() - d));
     }
   </demo>
 
@@ -79,10 +83,7 @@
         <tr each={opts.grid}>
           <th>{id}</th>
           <td each={items}
-              class={
-                item: true,
-                hidden: !!parent.parent.opts.filter && value.indexOf(parent.parent.opts.filter) === -1
-              }>
+              class="item { hidden: !!parent.parent.opts.filter && value.indexOf(parent.parent.opts.filter) === -1 }">
             {value}
           </td>
         </tr>
